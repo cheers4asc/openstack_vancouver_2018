@@ -226,7 +226,7 @@ match with the subnet that has been provided while installing Calico .
 
 *****
 
-**LAB5 :- Network policies **
+###LAB5 :- Network policies **
 
 This Lab is Star policies demo as documented by[ calico website
 ](https://docs.projectcalico.org/v3.1/getting-started/kubernetes/tutorials/stars-policy/).
@@ -292,7 +292,7 @@ can still access the backend.
 
 *****
 
-**Lab6:- Route Reflector and BGP peers **
+###Lab6:- Route Reflector and BGP peers **
 
 This one is study lab as you need multiple node setup for this lab exercise . 
 
