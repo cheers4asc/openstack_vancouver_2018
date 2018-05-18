@@ -19,7 +19,7 @@ required is 8 GB ( vbox has capacity to grow to 40 GB)<br> Virtualbox release
 5.2.10 + required
 
 vbox image provided is installed with RDO Openstack and Calico v3.1 for
-openstack . 
+openstack. 
 
 ![](https://cdn-images-1.medium.com/max/800/1*TCjWj9tvNXFi831NVgri-g.png)
 
@@ -197,36 +197,50 @@ calico.yaml
 if you check status of node now it should show all of the containers in
 kube-system running . ( This step will take appx 3 mins or so to complete) <br>
 <br> 
-
-    calico-etcd-9dc9  
-    2
-
-*****
-
-**Lab4 :- Deploy App on Calico **
-
-a. Deploy a Sample nginx app on K8s . <br> You have been provided with sample
-file name run-my-nginx.yaml in /root/labs/k8s folder
-
-Deploy app using kubectl .
-
-    # 
-
-b.get deployment status 
-
-
-c. get status of pods 
-
-
-d . Get detailed output to see the ip address of the pod . ip address should
-match with the subnet that has been provided while installing Calico . 
-
-
-## show that Openstack VM can reach out to this 
+```
+>kubectl get pod -n kube-system
+NAME READY STATUS RESTARTS AGE
+calico-kube-controllers-5b85d756c6-lkxgp 1/1 Running 0 55s
+calico-node-r4vzp 2/2 Running 0 54s
+calico-etcd-9dc9  1/1 Running 0 3m
+2kube-apiserver-myhost 1/1 Running 0 3m
+kube-controller-manager-myhost 1/1 Running 0 3m
+kube-dns-86f4d74b45-qxn9t 0/3 ContainerCreating 0 4m
+kube-proxy-tnj8h 1/1 Running 0 4m
+kube-scheduler-myhost 1/1 Running 0 3m
+```
 
 *****
 
-###LAB5 :- Network policies **
+### Lab4 :- Deploy App on Calico 
+a. Deploy a Sample nginx app on K8s . 
+You have been provided with sample file name run-my-nginx.yaml in /root/labs/k8s folder
+Deploy app using kubectl .
+
+```
+# kubectl create -f ./run-my-nginx.yaml
+```
+b.get deployment status 
+```# kubectl get deployments
+NAME DESIRED CURRENT UP-TO-DATE AVAILABLE AGE
+my-nginx 2     2        2          2      50s
+```
+c. get status of pods 
+```# kubectl get pods
+NAME                     READY STATUS RESTARTS  AGE
+my-nginx-77f56b88c8-c64mx 1/1 Running  0         52s
+my-nginx-77f56b88c8-z6zl6 1/1 Running  0         52s
+```
+d . Get detailed output to see the ip address of the pod . ip address should match with the subnet that has been provided while installing Calico . 
+```# kubectl get pods -l run=my-nginx -o wide
+NAME READY               STATUS RESTARTS AGE   IP        NODE
+my-nginx-77f56b88c8-c64mx 1/1 Running 0 1m 192.168.114.6 myhost
+my-nginx-77f56b88c8-z6zl6 1/1 Running 0 1m 192.168.114.5 myhost
+```
+*show that Openstack VM can reach out to this
+*****
+
+### LAB5 :- Network policies 
 
 This Lab is Star policies demo as documented by[ calico website
 ](https://docs.projectcalico.org/v3.1/getting-started/kubernetes/tutorials/stars-policy/).
@@ -292,7 +306,7 @@ can still access the backend.
 
 *****
 
-###Lab6:- Route Reflector and BGP peers **
+### Lab6:- Route Reflector and BGP peers 
 
 This one is study lab as you need multiple node setup for this lab exercise . 
 
